@@ -5,13 +5,13 @@ CREATE DATABASE IF NOT EXISTS online_store;
 USE online_store;
 
 -- Membuat user baru
-CREATE USER IF NOT EXISTS 'store_user'@'%' IDENTIFIED BY 'password123';
+--CREATE USER IF NOT EXISTS 'store_user'@'%' IDENTIFIED BY 'password123';
 
 -- Memberikan hak akses ke user
-GRANT ALL PRIVILEGES ON online_store.* TO 'store_user'@'%';
+--GRANT ALL PRIVILEGES ON online_store.* TO 'store_user'@'%';
 
 -- Mengaktifkan perubahan hak akses
-FLUSH PRIVILEGES;
+--FLUSH PRIVILEGES;
 
 -- Membuat tabel produk
 CREATE TABLE IF NOT EXISTS products (
