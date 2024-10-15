@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: online_store          # Nama database yang akan dibuat
+      MYSQL_USER: store_user                # Username yang telah dibuat
+      MYSQL_PASSWORD: password123            # Password untuk user
+      MYSQL_ROOT_PASSWORD: root_password     # Password untuk root
+    volumes:
+      - db_data:/var/lib/mysql              # Menyimpan data database ke volume
+
+  web:
+    build: .                               # Membangun image dari Dockerfile di folder ini
+    ports:
+      - "8080:80"                          # Menghubungkan port 80 di container ke port 8080 di host
+    depends_on:
+      - db                                  # Memastikan db sudah tersedia sebelum web berjalan
+
+volumes:
+  db_data:                                 # Volume untuk menyimpan data MySQL
