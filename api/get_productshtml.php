@@ -1,47 +1,25 @@
 <?php
-// URL untuk mengambil data JSON
-$url = 'https://sturdy-acorn-497757gjqg537vrx-8080.app.github.dev/api/get_products.php';
+// URL JSON
+$jsonUrl = 'https://sturdy-acorn-497757gjqg537vrx-8080.app.github.dev/api/get_products.php'; // Ganti dengan URL JSON yang sesuai
 
-// Mengambil data JSON dari URL
-$jsonData = file_get_contents($url);
+// Mengunduh JSON dari URL
+$jsonString = file_get_contents($jsonUrl);
 
-// Memeriksa apakah data berhasil diambil
-if ($jsonData === false) {
-    die('Error fetching data from the API.');
+// Memeriksa apakah pengunduhan berhasil
+if ($jsonString === false) {
+    die('Error fetching JSON from the URL');
 }
 
-// Decode JSON data to PHP array
-$data = json_decode($jsonData, true);
+// Mengonversi JSON menjadi array asosiatif
+$record = json_decode($jsonString, true);
 
-// Memeriksa apakah decoding berhasil
-if ($data === null) {
-    die('Error decoding JSON data.');
+// Memeriksa apakah konversi berhasil
+if (json_last_error() === JSON_ERROR_NONE) {
+    // Menampilkan record
+    foreach ($record as $key => $value) {
+        echo ucfirst($key) . ": " . $value . "\n";
+    }
+} else {
+    echo "Error decoding JSON: " . json_last_error_msg();
 }
-
-// Start HTML table
-echo '<table border="1" style="width: 100%; border-collapse: collapse;">';
-echo '<thead>';
-echo '<tr>';
-echo '<th>ID</th>';
-echo '<th>Name</th>';
-echo '<th>Price</th>';
-echo '<th>Created At</th>';
-echo '<th>Updated At</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
-
-// Loop through the data and output each row
-foreach ($data as $item) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($item['id']) . '</td>';
-    echo '<td>' . htmlspecialchars($item['name']) . '</td>';
-    echo '<td>' . htmlspecialchars($item['price']) . '</td>';
-    echo '<td>' . htmlspecialchars($item['created_at']) . '</td>';
-    echo '<td>' . htmlspecialchars($item['updated_at']) . '</td>';
-    echo '</tr>';
-}
-
-echo '</tbody>';
-echo '</table>';
 ?>
